@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>TOYTOP Каталог</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+        background-color: #f5f5f5;
+      }
+      input, select, textarea, button {
+        width: 100%;
+        padding: 10px;
+        margin-top: 10px;
+        font-size: 16px;
+      }
+    </style>
+  </head>
+  <body>
+    <h2>Регистрация исполнителя</h2>
+    <form id="form">
+      <input type="text" placeholder="Ваше имя" name="name" required />
+      <input type="text" placeholder="Ваш Telegram username" name="username" required />
+      <select name="category">
+        <option value="Фотограф">Фотограф</option>
+        <option value="Маркетолог">Маркетолог</option>
+        <option value="Дизайнер">Дизайнер</option>
+      </select>
+      <input type="text" placeholder="Город" name="city" />
+      <textarea placeholder="О себе" name="about"></textarea>
+      <button type="submit">Отправить</button>
+    </form>
+
+    <script>
+      const tg = window.Telegram.WebApp;
+      tg.expand();
+
+      const form = document.getElementById("form");
+      form.addEventListener("submit", async (e) => {
+        e.preventDefault();
+
+        const data = Object.fromEntries(new FormData(form).entries());
+        data.telegram_id = tg.initDataUnsafe.user?.id;
+
+        // Можно сюда подключить Google Sheets, Airtable, или отправить в Telegram
+        console.log("Данные формы:", data);
+        alert("Успешно отправлено!");
+
+        tg.close(); // Закрыть WebApp
+      });
+    </script>
+  </body>
+</html>
